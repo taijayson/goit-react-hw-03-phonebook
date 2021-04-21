@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React from "react";
+=======
+import { Component } from "react";
+>>>>>>> parent of 2420ec0 (main task files added and modified)
 
 import ContactForm from "./components/ContactForm/ContactForm";
 import Filter from "./components/Filter/Filter";
@@ -8,74 +12,91 @@ import ContactList from "./components/ContactList/ContactList";
 
 import "./App.css";
 
-// class App extends Component {
-//   state = {
-//     contacts: [
-//       { id: "id-1", name: "Annie Copeland", number: "227-91-26" },
-//       { id: "id-2", name: "Eden Clements", number: "645-17-79" },
-//       { id: "id-3", name: "Hermione Kline", number: "443-89-12" },
-//       { id: "id-4", name: "Rosie Simpson", number: "459-12-56" },
-//     ],
-//     filter: "",
-//   };
+class App extends Component {
+  state = {
+    contacts: [
+      { id: "id-1", name: "Annie Copeland", number: "227-91-26" },
+      { id: "id-2", name: "Eden Clements", number: "645-17-79" },
+      { id: "id-3", name: "Hermione Kline", number: "443-89-12" },
+      { id: "id-4", name: "Rosie Simpson", number: "459-12-56" },
+    ],
+    filter: "",
+  };
 
-//   getContactMatch = () => {
-//     const { contacts, filter } = this.state;
+  addContact = (data) => {
+    const newContact = {
+      ...data,
+      id: uuidv4(),
+    };
+    const { contacts } = this.state;
+    if (
+      contacts
+        .map((contact) => contact.name.toLowerCase())
+        .includes(data.name.toLowerCase())
+    ) {
+      alert(`Contact with name "${data.name}" already in base`);
+    } else {
+      this.setState((contacts) => ({
+        contacts: [newContact, ...contacts.contacts],
+      }));
+    }
+  };
 
-//     return contacts.filter((contacts) =>
-//       contacts.name.toLowerCase().includes(filter.toLowerCase())
-//     );
-//   };
+  getContactMatch = () => {
+    const { contacts, filter } = this.state;
 
-//   contactFilter = (event) => {
-//     const { value } = event.currentTarget;
-//     this.setState({ filter: value });
-//   };
+    return contacts.filter((contacts) =>
+      contacts.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
 
-//   deleteContact = (contactId) => {
-//     this.setState((prevState) => ({
-//       contacts: prevState.contacts.filter(
-//         (contact) => contact.id !== contactId
-//       ),
-//     }));
-//   };
+  contactFilter = (event) => {
+    const { value } = event.currentTarget;
+    this.setState({ filter: value });
+  };
 
-//   componentDidMount() {
-//     const contacts = JSON.parse(localStorage.getItem("contacts"));
-//     if (contacts) {
-//       this.setState({ contacts });
-//     }
-//   }
+  deleteContact = (contactId) => {
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter(
+        (contact) => contact.id !== contactId
+      ),
+    }));
+  };
 
-//   componentDidUpdate(prevProps, prevState) {
-//     if (this.state.contact !== prevState.contacts) {
-//       localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
-//     }
-//   }
+  componentDidMount() {
+    const contacts = JSON.parse(localStorage.getItem("contacts"));
+    if (contacts) {
+      this.setState({ contacts });
+    }
+  }
 
-//   render() {
-//     const { filter } = this.state;
-//     const filteredContacts = this.getContactMatch();
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contact !== prevState.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
 
-export const App = () => {
-  return (
-    <div className="wrap">
-      <div className="section">
-        <h1 className="title">Phonebook</h1>
-        <ContactForm />
-        {/* onSubmit={this.addContact} */}
+  render() {
+    const { filter } = this.state;
+    const filteredContacts = this.getContactMatch();
+
+    return (
+      <div className="wrap">
+        <div className="section">
+          <h1 className="title">Phonebook</h1>
+          <ContactForm onSubmit={this.addContact} />
+        </div>
+        <div className="section">
+          <h2 className="title">Contacts</h2>
+          <Filter value={filter} onChange={this.contactFilter} />
+          <ContactList
+            contacts={filteredContacts}
+            onRemoveContact={this.deleteContact}
+          />
+        </div>
       </div>
-      <div className="section">
-        <h2 className="title">Contacts</h2>
-        <Filter />
-        {/* value={filter} onChange={this.contactFilter} */}
-        <ContactList />
-        {/* contacts={filteredContacts}
-        onRemoveContact={this.deleteContact} */}
-      </div>
-    </div>
-  );
-};
-// }
+    );
+  }
+}
 
 export default App;

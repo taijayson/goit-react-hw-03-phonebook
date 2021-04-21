@@ -1,8 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import contactActions from "../../redux/contacts/contactsActions";
-import styles from "./ContactList.module.css";
+import styles from "./ContactList.module.css"
+import PropTypes from "prop-types"
 
 const ContactList = ({ contacts, onRemoveContact }) => {
   // console.log(contacts);
@@ -13,17 +10,17 @@ const ContactList = ({ contacts, onRemoveContact }) => {
           <li className={styles.item} key={id}>
             {name + " : " + number}
             <button
-              className={styles.delete_btn}
-              onClick={() => onRemoveContact(id)}
+                className={styles.delete_btn}
+                onClick={() => onRemoveContact(id)}
             >
-              Delete
+                Delete
             </button>
           </li>
-        );
+        )
       })}
     </ul>
-  );
-};
+  )
+}
 
 // const mapStateToProps = (state) => {
 //   const { contacts, filter } = state.contacts;
@@ -75,3 +72,8 @@ ContactList.propTypes = {
     })
   ),
 };
+<<<<<<< HEAD
+=======
+
+export default ContactList
+>>>>>>> parent of 2420ec0 (main task files added and modified)

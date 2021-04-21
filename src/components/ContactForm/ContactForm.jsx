@@ -1,11 +1,9 @@
-import { Component } from "react";
-import { connect } from "react-redux";
-import contactActions from "../../redux/contacts/contactsActions";
-import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
-import styles from "./ContactForm.module.css";
+import { Component } from "react"
+import styles from "./ContactForm.module.css"
+import PropTypes from "prop-types"
 
 class ContactForm extends Component {
+<<<<<<< HEAD
   state = {
     name: "",
     number: "",
@@ -43,58 +41,63 @@ class ContactForm extends Component {
     //   alert(`Contact with name "${name}" already in base`);
     //   return;
     // }
+=======
+    state = {
+        name: "",
+        number: "",
+    }
 
-    const newContact = {
-      name: name,
-      number: number,
-      id: uuidv4(),
-    };
+    handleChange = (event) => {
+        const { name, value } = event.currentTarget
+        this.setState({ [name]: value })
+    }
+>>>>>>> parent of 2420ec0 (main task files added and modified)
 
-    this.props.onSubmit(newContact);
-    this.setState({ name: "", number: "" });
-  };
+    handleSubmit = (event) => {
+        event.preventDefault()
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit} className={styles.form}>
-        <label className={styles.label}>Name</label>
-        <input
-          type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-          required
-          className={styles.input}
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <label className={styles.label}>Number</label>
-        <input
-          type="tel"
-          name="number"
-          pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
-          title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
-          required
-          className={styles.input}
-          value={this.state.number}
-          onChange={this.handleChange}
-        />
-        <button
-          className={styles.button}
-          type="submit"
-          onSubmit={this.handleAddContact}
-        >
-          Add contact
-        </button>
-      </form>
-    );
-  }
+        this.props.onSubmit({ ...this.state })
+        this.setState({ name: "", number: "" })
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit} className={styles.form}>
+            <label className={styles.label}>Name</label>
+            <input
+                type="text"
+                name="name"
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+                required
+                className={styles.input}
+                value={this.state.name}
+                onChange={this.handleChange}
+            />
+            <label className={styles.label}>Number</label>
+            <input
+                type="tel"
+                name="number"
+                pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
+                title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
+                required
+                className={styles.input}
+                value={this.state.number}
+                onChange={this.handleChange}
+            />
+            <button className={styles.button} type="submit" onSubmit={this.handleAddContact}>
+            Add contact
+            </button>    
+        </form>
+        )
+    }
 }
 
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
+<<<<<<< HEAD
 const mapStateToProps = (state) => {
   console.log(state);
   return {
@@ -107,3 +110,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+=======
+export default ContactForm
+>>>>>>> parent of 2420ec0 (main task files added and modified)
