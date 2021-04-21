@@ -20,30 +20,29 @@ class ContactForm extends Component {
   // }
   //   };
 
-  checkContact = (name) => {
-    const contacts = this.props.contacts;
-
-    const normalizeName = name.toLowerCase();
-
-    return contacts.some(
-      (contact) => contact.name.toLowerCase() === normalizeName
-    );
-  };
+  //   checkContact = (name) => {
+  //     const contacts = this.props.contacts;
+  //     // const normalizeName = name.toLowerCase();
+  //     return contacts.some(
+  //       (contact) => contact.name.toLowerCase() === name.toLowerCase()
+  //     );
+  //   };
 
   handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.currentTarget;
     this.setState({ [name]: value });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
+    console.log(this.props);
 
     const { name, number } = this.state;
 
-    if (this.checkContact(name)) {
-      alert(`Contact with name "${name}" already in base`);
-      return;
-    }
+    // if (this.checkContact(name)) {
+    //   alert(`Contact with name "${name}" already in base`);
+    //   return;
+    // }
 
     const newContact = {
       name: name,
@@ -96,9 +95,12 @@ ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ contacts: { contacts } }) => ({
-  contacts: contacts,
-});
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    contacts: state.contacts,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (contact) => dispatch(contactActions.addContact(contact)),

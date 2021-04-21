@@ -4,29 +4,35 @@ import PropTypes from "prop-types";
 import contactActions from "../../redux/contacts/contactsActions";
 import styles from "./Filter.module.css";
 
-const Filter = ({ value, onChange }) => {
-  console.log(onChange);
+const Filter = ({ filter, filterContact }) => {
+  // console.log(filter);
+  // console.log(filterContact);
   return (
     <div className={styles.filter_wrap}>
       <p className={styles.filter_title}>Find contacts by name</p>
       <input
         className={styles.filter_input}
         type="text"
-        value={value}
-        onChange={onChange}
+        value={filter}
+        onChange={filterContact}
       />
     </div>
   );
 };
 
 Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  filter: PropTypes.func.isRequired,
+  filterContact: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  value: state.contacts.filter,
-});
+const mapStateToProps = ({ filter }) => {
+  return (
+    console.log(filter),
+    {
+      filter: filter,
+    }
+  );
+};
 
 const mapDispatchToProps = (dispatch) => ({
   filterContact: (event) =>

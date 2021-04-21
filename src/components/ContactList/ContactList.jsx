@@ -5,6 +5,7 @@ import contactActions from "../../redux/contacts/contactsActions";
 import styles from "./ContactList.module.css";
 
 const ContactList = ({ contacts, onRemoveContact }) => {
+  // console.log(contacts);
   return (
     <ul className={styles.list}>
       {contacts.map(({ name, id, number }) => {
@@ -24,6 +25,46 @@ const ContactList = ({ contacts, onRemoveContact }) => {
   );
 };
 
+// const mapStateToProps = (state) => {
+//   const { contacts, filter } = state.contacts;
+//   const normalizeFilter = filter.toLowerCase();
+//   const getFilteredContacts = contacts.filter((contact) =>
+//     contact.name.toLowerCase().includes(normalizeFilter)
+//   );
+//   return {
+//     contacts: getFilteredContacts,
+//   };
+// };
+// const mapStateToProps = ({ contacts, filter }) => {
+//   const normalizeFilter = filter.toLowerCase();
+//   const getFilteredContacts = contacts.filter((contact) =>
+//     contact.name.toLowerCase().includes(normalizeFilter)
+//   );
+//   return {
+//     contacts: getFilteredContacts,
+//   };
+//////==|or|==///////
+// return {
+//   contacts: contacts.filter((contact) =>
+//     contact.name.toLowerCase().includes(filter.toLowerCase())
+//   ),
+// };
+// };
+// };
+
+const mapStateToProps = ({ contacts, filter }) => ({
+  contacts: contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  ),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onRemoveContact: (contactId) =>
+    dispatch(contactActions.deleteContact(contactId)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+
 ContactList.propTypes = {
   onRemoveContact: PropTypes.func.isRequired,
   contacts: PropTypes.arrayOf(
@@ -34,22 +75,3 @@ ContactList.propTypes = {
     })
   ),
 };
-
-const mapStateToProps = (state) => {
-  const { contacts, filter } = state.contacts;
-  console.log(state);
-
-  const normalizeFilter = filter.toLowerCase();
-  const getFilteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(normalizeFilter)
-  );
-  return {
-    contacts: getFilteredContacts,
-  };
-};
-const mapDispatchToProps = (dispatch) => ({
-  deleteContact: (contactId) =>
-    dispatch(contactActions.deleteContact(contactId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

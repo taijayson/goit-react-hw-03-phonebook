@@ -3,7 +3,11 @@ import { ADDCONTACT, FILTERCONTACT, DELETECONTACT } from "./contactsConstanse";
 const addContact = (contact) => {
   return {
     type: ADDCONTACT,
-    payload: contact,
+    payload: {
+      id: contact.id,
+      name: contact.name,
+      number: contact.number,
+    },
   };
 };
 
@@ -21,4 +25,6 @@ const deleteContact = (id) => {
   };
 };
 
-export default { addContact, filterContact, deleteContact };
+const allActions = { addContact, filterContact, deleteContact };
+
+export default allActions;
